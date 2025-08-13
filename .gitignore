@@ -1,11 +1,6 @@
 .env
 tmp/
-cmd/server/.air.toml
-cmd/server/tmp/
-cmd/server/data/
-.air.toml
+*.air.toml
 *.db
 *.log
 *.exe
-*.out
-server
