@@ -45,22 +45,22 @@ Edit `.env` file:
 
 ```env
 # Database Configuration
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_NAME=college_backend
-DB_USER=root
-DB_PASSWORD=root
+DB_HOST=
+DB_PORT=
+DB_NAME=
+DB_USER=
+DB_PASSWORD=
 
 # JWT Configuration
 JWT_SECRET=your-super-secret-jwt-key-for-production-change-this
-JWT_EXPIRES_HOURS=24
+JWT_EXPIRES_HOURS=
 
 # Server Configuration
-PORT=8001
-GIN_MODE=release
+PORT=
+GIN_MODE=
 
 # CORS Configuration
-CORS_ALLOWED_ORIGINS=http://localhost:3000,http://localhost:5173
+CORS_ALLOWED_ORIGINS=
 CORS_ALLOWED_METHODS=GET,POST,PUT,DELETE,OPTIONS
 CORS_ALLOWED_HEADERS=Origin,Content-Type,Accept,Authorization,X-Requested-With
 ```
@@ -101,8 +101,8 @@ POST /api/login
 Content-Type: application/json
 
 {
-  "username": "admin.youth.college",
-  "password": "youth-college2025"
+  "username": "<string>",
+  "password": "<string>"
 }
 ```
 
@@ -113,10 +113,10 @@ Content-Type: application/json
   "success": true,
   "message": "Login successful",
   "data": {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "token": "<token>",
     "user": {
-      "id": 1,
-      "username": "admin.youth.college"
+      "id": "<int>",
+      "username": "<string>"
     }
   }
 }
@@ -315,23 +315,16 @@ This project is licensed under the MIT License.
 
 ### Konfigurasi
 
-Variabel lingkungan:
-
-- `PORT` (default `8080`)
-- `DATABASE_URL` (prioritas utama)
-  - Postgres: `postgres://USER:PASSWORD@HOST:5432/DBNAME?sslmode=require`
-  - MySQL (tanpa skema atau dengan skema):
-    - `USER:PASSWORD@tcp(HOST:3306)/DBNAME?parseTime=true&loc=Local`
-    - `mysql://USER:PASSWORD@HOST:3306/DBNAME?parseTime=true&loc=Local`
-- `DB_PATH` (fallback SQLite, default `./data/app.db`) — digunakan jika `DATABASE_URL` tidak di-set.
-
-Contoh `.env` (lokal, gunakan `direnv` atau export manual):
-
-```bash
-export PORT=8080
 # Pilih salah satu contoh:
+
 # Postgres
+
 # export DATABASE_URL="postgres://USER:PASSWORD@HOST:5432/DBNAME?sslmode=require"
+
 # MySQL
+
 # export DATABASE_URL="USER:PASSWORD@tcp(HOST:3306)/DBNAME?parseTime=true&loc=Local"
+
+```
+
 ```
