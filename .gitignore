@@ -1,0 +1,10 @@
+.env
+tmp/
+cmd/server/tmp/
+cmd/server/data/
+.air.toml
+*.db
+*.log
+*.exe
+*.out
+server
