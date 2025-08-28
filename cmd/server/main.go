@@ -53,10 +53,15 @@ func mustConnectDatabase(dsnOrPath string) *gorm.DB {
 
 func main() {
 	// Load .env file dari parent directory jika ada
-	if err := godotenv.Load("../.env"); err != nil {
-		log.Printf("Warning: Error loading .env file from parent: %v", err)
-		// fallback: coba load dari current dir
-		_ = godotenv.Load()
+	// if err := godotenv.Load("../.env"); err != nil {
+	// 	log.Printf("Warning: Error loading .env file from parent: %v", err)
+	// 	// fallback: coba load dari current dir
+	// 	_ = godotenv.Load()
+	// }
+
+	if err := godotenv.Load("../../.env"); err != nil {
+		_ = godotenv.Load("../.env")
+		_ = godotenv.Load(".env")
 	}
 
 	port := getEnvOrDefault("PORT", "8001")
@@ -75,11 +80,11 @@ func main() {
 		log.Printf("Connecting to MySQL: %s", databaseURL)
 	} else {
 		// Prefer DATABASE_URL (can be Postgres or MySQL); fallback to SQLite path via DB_PATH
-		databaseURL = getEnvOrDefault("DATABASE_URL", "")
-		if databaseURL == "" {
-			databaseURL = getEnvOrDefault("DB_PATH", filepath.Join(".", "data", "app.db"))
-		}
-		log.Printf("Using database: %s", databaseURL)
+		// databaseURL = getEnvOrDefault("DATABASE_URL", "")
+		// if databaseURL == "" {
+		// 	databaseURL = getEnvOrDefault("DB_PATH", filepath.Join(".", "data", "app.db"))
+		// }
+		// log.Printf("Using database: %s", databaseURL)
 	}
 
 	database := mustConnectDatabase(databaseURL)
@@ -108,7 +113,7 @@ func main() {
 	engine := gin.Default()
 
 	// Setup CORS
-	allowOriginsRaw := getEnvOrDefault("CORS_ALLOWED_ORIGINS", "http://localhost:3000,http://localhost:5173,http://10.255.209.77:3000,http://10.255.209.77:5173")
+	allowOriginsRaw := getEnvOrDefault("CORS_ALLOWED_ORIGINS", "http://localhost:3000,http://localhost:5173,http://192.168.1.3:3000,http://192.168.1.3:5173")
 	allowOrigins := strings.Split(allowOriginsRaw, ",")
 	for i := range allowOrigins {
 		allowOrigins[i] = strings.TrimSpace(allowOrigins[i])

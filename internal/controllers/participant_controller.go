@@ -55,7 +55,18 @@ func (pc *ParticipantController) CreateParticipant(c *gin.Context) {
 		return
 	}
 
-	helpers.ResponseCreated(c, "Participant created successfully", participant)
+	response := gin.H{
+		"status":  "success",
+		"code":    201,
+		"message": "Selamat, Pendaftaran Anda Berhasil!",
+		"event": gin.H{
+			"name":     "Ibadah College Welcoming Service",
+			"date":     "Sabtu, 6 September 2025",
+			"location": "GBT Firman Kudus Semarang",
+			"note":     "Jangan lupa datang!",
+		},
+	}
+	c.JSON(201, response)
 }
 
 // GetAllParticipants mengambil semua participants dengan pagination, search, dan sorting
@@ -65,7 +76,19 @@ func (pc *ParticipantController) GetAllParticipants(c *gin.Context) {
 	limit := c.DefaultQuery("limit", "10")
 	search := c.Query("search")
 	sortBy := c.DefaultQuery("sort_by", "created_at")
-	sortOrder := c.DefaultQuery("sort_order", "desc")
+	sortOrder := c.DefaultQuery("sort_order", "asc")
+
+	// Paksa default sorting created_at asc jika tidak ada query param sort_by
+	if c.Query("sort_by") == "" {
+		sortBy = "created_at"
+		sortOrder = "asc"
+	}
+
+	// Paksa default sorting created_at desc jika tidak ada query param sort_by
+	// if c.Query("sort_by") == "" {
+	// 	sortBy = "created_at"
+	// 	sortOrder = "desc"
+	// }
 
 	// Convert to int
 	pageInt := 1
